@@ -55,6 +55,7 @@ namespace SistemaCadastro
             cbGenero.DisplayMember = "genero"; // texto que será mostrado
             cbGenero.ValueMember = "idgenero"; // qual valor que será guardado quando selecionado
             lblmsgerro.Text = con.mensagem;
+            cbGenero.Text = "";
         }
 
 

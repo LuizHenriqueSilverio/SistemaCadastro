@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "atqmsUMx2nG8X+7U/M0YkjpxOd2/6d0zpn3JN63Kx/YrEdfURhya/KiJ20KgFOuHUrciA7yKnaUP6ZUaZrgyVg==",
+  "dgSpecHash": "ZLnNVJX0xhL/JiuvDe16Di5ryOr0eYZbum+Dz/M4oZqVECqsp1/5OB7sjoFGcIXr+avWpeDi/3FYPPvU/0ti5A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\02239263610\\Desktop\\Linguagem_de_Programacao_I\\SistemaCadastro\\SistemaCadastro\\SistemaCadastro.csproj",
+  "projectFilePath": "C:\\Users\\02239263610\\Desktop\\SistemaCadastro\\SistemaCadastro\\SistemaCadastro.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\02239263610\\.nuget\\packages\\google.protobuf\\3.19.4\\google.protobuf.3.19.4.nupkg.sha512",
     "C:\\Users\\02239263610\\.nuget\\packages\\k4os.compression.lz4\\1.2.6\\k4os.compression.lz4.1.2.6.nupkg.sha512",
