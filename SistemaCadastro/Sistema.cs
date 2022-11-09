@@ -41,21 +41,37 @@ namespace SistemaCadastro
         }
 
 
-
-
-
-
-
-        private void Sistema_Load(object sender, EventArgs e)
+        private void listaGenero()
         {
             ConectaBanco con = new ConectaBanco(); // instancia o ConectaBanco
             DataTable tabelaDados = new DataTable(); // instancia uma tabela virtual, que vai receber a tabela virtual de outra função
-            tabelaDados = con.listaGeneros(); 
+            tabelaDados = con.listaGeneros();
             cbGenero.DataSource = tabelaDados; // especifica a fonte de dados
             cbGenero.DisplayMember = "genero"; // texto que será mostrado
             cbGenero.ValueMember = "idgenero"; // qual valor que será guardado quando selecionado
             lblmsgerro.Text = con.mensagem;
             cbGenero.Text = "";
+        }
+
+        private void listaBanda()
+        {
+            ConectaBanco con = new ConectaBanco();
+            dgBandas.DataSource = con.listaBandas();
+        }
+
+        private void limpaCampos()
+        {
+            txtnome.Text = "";
+            cbGenero.Text = "";
+            txtintegrantes.Text = "";
+            txtranking.Text = "";
+            txtnome.Focus();
+        }
+
+        private void Sistema_Load(object sender, EventArgs e)
+        {
+            listaGenero();
+            listaBanda();
         }
 
 
@@ -77,11 +93,14 @@ namespace SistemaCadastro
             {
                 lblmsgerro.Text = conecta.mensagem;
             }
+
+            listaBanda();
+            limpaCampos();
         }
 
         private void txtBusca_TextChanged(object sender, EventArgs e)
         {
-  
+            (dgBandas.DataSource as DataTable).DefaultView.RowFilter = String.Format("nome like'%{0}%'", txtBusca.Text);
         }
 
         private void btnRemoveBanda_Click(object sender, EventArgs e)
