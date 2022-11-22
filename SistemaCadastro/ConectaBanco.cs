@@ -63,6 +63,30 @@ namespace SistemaCadastro
             }
         }// fim insereBanda
 
+        public bool deletaBanda(int idbanda)
+        {
+            MySqlCommand cmd = new MySqlCommand("deleta_banda", conexao);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("idbanda", idbanda);
+            try
+            {
+                conexao.Open();
+                cmd.ExecuteNonQuery(); // executa o comando
+                return true;
+            }
+            catch (MySqlException e)
+            {
+                mensagem = "Erro:" + e.Message;
+                return false;
+            }
+            finally
+            {
+                conexao.Close();
+            }
+        }// fim deletaBanda
+
+
+
         public DataTable listaBandas()
         {
             MySqlCommand cmd = new MySqlCommand("lista_bandas", conexao);
