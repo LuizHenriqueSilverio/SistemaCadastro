@@ -205,6 +205,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(784, 321);
             this.tabControl1.TabIndex = 9;
+            this.tabControl1.Visible = false;
             // 
             // tabCadastrar
             // 
