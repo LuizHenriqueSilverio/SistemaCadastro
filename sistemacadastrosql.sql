@@ -12,175 +12,131 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 
--- Copiando estrutura do banco de dados para psf_luizedaiana
-DROP DATABASE IF EXISTS `psf_luizedaiana`;
-CREATE DATABASE IF NOT EXISTS `psf_luizedaiana` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `psf_luizedaiana`;
+-- Copiando estrutura do banco de dados para banco_cadastro
+DROP DATABASE IF EXISTS `banco_cadastro`;
+CREATE DATABASE IF NOT EXISTS `banco_cadastro` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `banco_cadastro`;
 
--- Copiando estrutura para tabela psf_luizedaiana.consultas
-DROP TABLE IF EXISTS `consultas`;
-CREATE TABLE IF NOT EXISTS `consultas` (
-  `codCONSULTA` int(11) NOT NULL AUTO_INCREMENT,
-  `dataHora` datetime NOT NULL,
-  `motivo` varchar(200) NOT NULL,
-  `MEDICOS_codMEDICOS` int(11) NOT NULL,
-  `PACIENTES_codPACIENTES` int(11) NOT NULL,
-  PRIMARY KEY (`codCONSULTA`,`MEDICOS_codMEDICOS`,`PACIENTES_codPACIENTES`),
-  KEY `fk_CONSULTAS_MEDICOS_idx` (`MEDICOS_codMEDICOS`),
-  KEY `fk_CONSULTAS_PACIENTES1_idx` (`PACIENTES_codPACIENTES`),
-  CONSTRAINT `fk_CONSULTAS_MEDICOS` FOREIGN KEY (`MEDICOS_codMEDICOS`) REFERENCES `medicos` (`codMEDICOS`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_CONSULTAS_PACIENTES1` FOREIGN KEY (`PACIENTES_codPACIENTES`) REFERENCES `pacientes` (`codPACIENTES`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- Copiando estrutura para tabela banco_cadastro.bandas
+DROP TABLE IF EXISTS `bandas`;
+CREATE TABLE IF NOT EXISTS `bandas` (
+  `idbandas` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) DEFAULT NULL,
+  `integrantes` int(11) DEFAULT NULL,
+  `ranking` int(11) DEFAULT NULL,
+  `genero` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idbandas`),
+  KEY `genero_idx` (`genero`),
+  CONSTRAINT `genero` FOREIGN KEY (`genero`) REFERENCES `generos` (`idgenero`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
--- Copiando dados para a tabela psf_luizedaiana.consultas: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `consultas` DISABLE KEYS */;
-/*!40000 ALTER TABLE `consultas` ENABLE KEYS */;
+-- Copiando dados para a tabela banco_cadastro.bandas: ~3 rows (aproximadamente)
+/*!40000 ALTER TABLE `bandas` DISABLE KEYS */;
+INSERT INTO `bandas` (`idbandas`, `nome`, `integrantes`, `ranking`, `genero`) VALUES
+	(8, 'Metallica', 4, 2, 2),
+	(9, 'Megadeth', 4, 1, 2),
+	(11, 'Judas Priest', 5, 3, 2);
+/*!40000 ALTER TABLE `bandas` ENABLE KEYS */;
 
--- Copiando estrutura para tabela psf_luizedaiana.medicos
-DROP TABLE IF EXISTS `medicos`;
-CREATE TABLE IF NOT EXISTS `medicos` (
-  `codMEDICOS` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(100) NOT NULL,
-  `crm` varchar(45) NOT NULL,
-  `especialidade` varchar(200) NOT NULL,
-  PRIMARY KEY (`codMEDICOS`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- Copiando dados para a tabela psf_luizedaiana.medicos: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `medicos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `medicos` ENABLE KEYS */;
-
--- Copiando estrutura para tabela psf_luizedaiana.pacientes
-DROP TABLE IF EXISTS `pacientes`;
-CREATE TABLE IF NOT EXISTS `pacientes` (
-  `codPACIENTES` int(11) NOT NULL AUTO_INCREMENT,
-  `cpf` varchar(100) NOT NULL,
-  `nome` varchar(200) NOT NULL,
-  `telefone` varchar(45) NOT NULL,
-  `endereco` varchar(200) NOT NULL,
-  PRIMARY KEY (`codPACIENTES`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
--- Copiando dados para a tabela psf_luizedaiana.pacientes: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `pacientes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pacientes` ENABLE KEYS */;
-
--- Copiando estrutura para procedure psf_luizedaiana.proc_alteraConsulta
-DROP PROCEDURE IF EXISTS `proc_alteraConsulta`;
+-- Copiando estrutura para procedure banco_cadastro.deleta_banda
+DROP PROCEDURE IF EXISTS `deleta_banda`;
 DELIMITER //
-CREATE PROCEDURE `proc_alteraConsulta`(IN dataHora DATETIME, IN motivo VARCHAR(200), IN Medicos_codMedicos INT, IN Pacientes_codPacientes INT, IN codCons INT)
+CREATE PROCEDURE `deleta_banda`(IN idbanda INT)
 BEGIN
-	UPDATE `psf_luizedaiana`.`consultas`
-	SET
-	`dataHora` = dataHora,
-	`motivo` = motivo,
-	`MEDICOS_codMEDICOS` = Medicos_codMedicos,
-	`PACIENTES_codPACIENTES` = Pacientes_codPacientes
-	WHERE `codCONSULTA` = codCons;
+	DELETE FROM `banco_cadastro`.`bandas`
+	WHERE `idbandas` = idbanda;
 END//
 DELIMITER ;
 
--- Copiando estrutura para procedure psf_luizedaiana.proc_alteraMedico
-DROP PROCEDURE IF EXISTS `proc_alteraMedico`;
+-- Copiando estrutura para tabela banco_cadastro.generos
+DROP TABLE IF EXISTS `generos`;
+CREATE TABLE IF NOT EXISTS `generos` (
+  `idgenero` int(11) NOT NULL AUTO_INCREMENT,
+  `genero` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idgenero`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+
+-- Copiando dados para a tabela banco_cadastro.generos: ~3 rows (aproximadamente)
+/*!40000 ALTER TABLE `generos` DISABLE KEYS */;
+INSERT INTO `generos` (`idgenero`, `genero`) VALUES
+	(1, 'Rock'),
+	(2, 'Metal'),
+	(3, 'Pagode'),
+	(4, 'Gospel');
+/*!40000 ALTER TABLE `generos` ENABLE KEYS */;
+
+-- Copiando estrutura para procedure banco_cadastro.insere_banda
+DROP PROCEDURE IF EXISTS `insere_banda`;
 DELIMITER //
-CREATE PROCEDURE `proc_alteraMedico`(IN nome VARCHAR(100), IN crm VARCHAR(45), IN cod INT)
+CREATE PROCEDURE `insere_banda`(nome VARCHAR(45), integrantes INT(11), ranking INT(11), genero INT(11))
 BEGIN
-	UPDATE `psf_luizedaiana`.`medicos`
-	SET
-		`nome` = nome,
-		`crm` = crm
-	WHERE `codMEDICOS` = cod;
+	INSERT INTO `banco_cadastro`.`bandas`
+		(
+			`nome`,
+			`integrantes`,
+			`ranking`,
+			`genero`
+		)
+		VALUES
+		(
+			nome,
+			integrantes,
+			ranking,
+			genero
+		);
 
 END//
 DELIMITER ;
 
--- Copiando estrutura para procedure psf_luizedaiana.proc_alteraPaciente
-DROP PROCEDURE IF EXISTS `proc_alteraPaciente`;
+-- Copiando estrutura para procedure banco_cadastro.insere_genero
+DROP PROCEDURE IF EXISTS `insere_genero`;
 DELIMITER //
-CREATE PROCEDURE `proc_alteraPaciente`(IN cpf VARCHAR(100), IN nome VARCHAR(200), IN telefone VARCHAR(45), IN endereco VARCHAR(200))
+CREATE PROCEDURE `insere_genero`(genero VARCHAR(50))
 BEGIN
-	UPDATE `psf_luizedaiana`.`pacientes`
-	SET
-		`cpf` = cpf,
-		`nome` = nome,
-		`telefone` = telefone,
-		`endereco` = endereco
-	WHERE `codPACIENTES` = cod;
-
-END//
-DELIMITER ;
-
--- Copiando estrutura para procedure psf_luizedaiana.proc_deletaMedico
-DROP PROCEDURE IF EXISTS `proc_deletaMedico`;
-DELIMITER //
-CREATE PROCEDURE `proc_deletaMedico`(IN codMed INT)
-BEGIN
-	DELETE FROM `psf_luizedaiana`.`medicos`
-	WHERE codMedicos = codMed;
-END//
-DELIMITER ;
-
--- Copiando estrutura para procedure psf_luizedaiana.proc_deletaPaciente
-DROP PROCEDURE IF EXISTS `proc_deletaPaciente`;
-DELIMITER //
-CREATE PROCEDURE `proc_deletaPaciente`(IN codPac INT)
-BEGIN
-	DELETE FROM `psf_luizedaiana`.`pacientes`
-	WHERE codPacientes = codPac;
-END//
-DELIMITER ;
-
--- Copiando estrutura para procedure psf_luizedaiana.proc_insereConsulta
-DROP PROCEDURE IF EXISTS `proc_insereConsulta`;
-DELIMITER //
-CREATE PROCEDURE `proc_insereConsulta`(IN dataHora DATETIME, IN motivo VARCHAR(200), IN Medicos_codMedicos INT, IN Paciente_codPacientes INT)
-BEGIN
-	INSERT INTO `psf_luizedaiana`.`consultas`
-	(
-		`dataHora`,
-		`motivo`,
-		`MEDICOS_codMEDICOS`,
-		`PACIENTES_codPACIENTES`
-    )
+	INSERT INTO `banco_cadastro`.`generos`
+	(`genero`)
 	VALUES
-	(
-		dataHora,
-		motivo,
-		Medicos_codMedicos,
-		Pacientes_codPacientes
-    );
+	(genero);
+END//
+DELIMITER ;
+
+-- Copiando estrutura para procedure banco_cadastro.lista_bandas
+DROP PROCEDURE IF EXISTS `lista_bandas`;
+DELIMITER //
+CREATE PROCEDURE `lista_bandas`()
+BEGIN
+	SELECT 	idbandas,
+			nome,
+            integrantes,
+            ranking,
+            generos.genero 
+	FROM bandas INNER JOIN generos ON bandas.genero = generos.idgenero;
 
 END//
 DELIMITER ;
 
--- Copiando estrutura para procedure psf_luizedaiana.proc_insereMedico
-DROP PROCEDURE IF EXISTS `proc_insereMedico`;
+-- Copiando estrutura para procedure banco_cadastro.lista_generos
+DROP PROCEDURE IF EXISTS `lista_generos`;
 DELIMITER //
-CREATE PROCEDURE `proc_insereMedico`(IN nomeMedico VARCHAR(100), IN crmMedico VARCHAR(45))
+CREATE PROCEDURE `lista_generos`()
 BEGIN
-	INSERT INTO MEDICOS VALUES(
-		NULL,
-        nomeMedico,
-        crmMedico
-	);
+	SELECT * FROM GENEROS;
 END//
 DELIMITER ;
 
--- Copiando estrutura para procedure psf_luizedaiana.proc_inserePaciente
-DROP PROCEDURE IF EXISTS `proc_inserePaciente`;
+-- Copiando estrutura para procedure banco_cadastro.update_banda
+DROP PROCEDURE IF EXISTS `update_banda`;
 DELIMITER //
-CREATE PROCEDURE `proc_inserePaciente`(IN cpfPaciente VARCHAR(100), 
-										IN nomePaciente VARCHAR(100), 
-                                        IN telefone VARCHAR(45), 
-                                        IN endereco VARCHAR(100))
+CREATE PROCEDURE `update_banda`(IN nome VARCHAR(45), IN integrantes INT(11), IN ranking INT(11), IN genero INT(11), IN idbanda INT)
 BEGIN
-	INSERT INTO PACIENTES VALUES(
-		NULL,
-		cpfPaciente,
-		nomePaciente,
-        telefone,
-        endereco
-    );
+	UPDATE `banco_cadastro`.`bandas`
+	SET
+	`nome` = nome,
+	`integrantes` = integrantes,
+	`ranking` = ranking,
+	`genero` = genero
+	WHERE `idbandas` = idbanda;
+
 END//
 DELIMITER ;
 
