@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ZLnNVJX0xhL/JiuvDe16Di5ryOr0eYZbum+Dz/M4oZqVECqsp1/5OB7sjoFGcIXr+avWpeDi/3FYPPvU/0ti5A==",
+  "dgSpecHash": "k/O+lSq012MbfKNJovku6AzUI6By0Shk5lkq2ch5kvZaCsDDK8CJ+Vgb1wcMq4vp65d9x5UW6DNmN5V87YjNdw==",
   "success": true,
   "projectFilePath": "C:\\Users\\02239263610\\Desktop\\SistemaCadastro\\SistemaCadastro\\SistemaCadastro.csproj",
   "expectedPackageFiles": [
@@ -23,7 +23,10 @@
     "C:\\Users\\02239263610\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
     "C:\\Users\\02239263610\\.nuget\\packages\\system.text.encoding.codepages\\4.4.0\\system.text.encoding.codepages.4.4.0.nupkg.sha512",
     "C:\\Users\\02239263610\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512",
-    "C:\\Users\\02239263610\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.14\\microsoft.netcore.app.host.win-x64.5.0.14.nupkg.sha512"
+    "C:\\Users\\02239263610\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.14\\microsoft.netcore.app.host.win-x64.5.0.14.nupkg.sha512",
+    "C:\\Users\\02239263610\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\5.0.0\\microsoft.aspnetcore.app.ref.5.0.0.nupkg.sha512",
+    "C:\\Users\\02239263610\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\5.0.0\\microsoft.windowsdesktop.app.ref.5.0.0.nupkg.sha512",
+    "C:\\Users\\02239263610\\.nuget\\packages\\microsoft.netcore.app.ref\\5.0.0\\microsoft.netcore.app.ref.5.0.0.nupkg.sha512"
   ],
   "logs": []
 }
