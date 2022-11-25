@@ -13,6 +13,7 @@ namespace SistemaCadastro
 {
     public partial class Sistema : Form
     {
+        int idalterar;
 
         public Sistema()
         {
@@ -49,8 +50,14 @@ namespace SistemaCadastro
             cbGenero.DataSource = tabelaDados; // especifica a fonte de dados
             cbGenero.DisplayMember = "genero"; // texto que será mostrado
             cbGenero.ValueMember = "idgenero"; // qual valor que será guardado quando selecionado
+            //prrenchendo cbAlteraGenero
+            cbAlteraGenero.DataSource = tabelaDados;
+            cbAlteraGenero.DisplayMember = "genero"; 
+            cbAlteraGenero.ValueMember = "idgenero"; 
+
             lblmsgerro.Text = con.mensagem;
             cbGenero.Text = "";
+            cbAlteraGenero.Text = "";
         }
 
         private void listaBanda()
@@ -105,19 +112,61 @@ namespace SistemaCadastro
 
         private void btnRemoveBanda_Click(object sender, EventArgs e)
         {
-           
+            int linha = dgBandas.CurrentRow.Index; //pega a linha selecionada
+            int idremover = Convert.ToInt32(dgBandas.Rows[linha].Cells["idbandas"].Value.ToString());
+            DialogResult resp = MessageBox.Show("Confirma exclusão?", "Remove banda", MessageBoxButtons.OKCancel);
+            if (resp == DialogResult.OK)
+            {
+                ConectaBanco conecta = new ConectaBanco();
+                bool retorno = conecta.deletaBanda(idremover);
+                if (retorno)
+                {
+                    MessageBox.Show("Banda excluida!");
+                }
+                else
+                {
+                    lblmsgerro.Text = conecta.mensagem;
+                }
+                listaBanda();
+            }
+            else
+            {
+                MessageBox.Show("Operação cancelada.");
+            }
+
         }
 
         private void btnAlterar_Click(object sender, EventArgs e)
         {
-            
+            int linha = dgBandas.CurrentRow.Index; //pega a linha selecionada
+            idalterar = Convert.ToInt32(dgBandas.Rows[linha].Cells["idbandas"].Value.ToString());
+            txtAlteraNome.Text = dgBandas.Rows[linha].Cells["nome"].Value.ToString();
+            txtAlteraIntegrantes.Text = dgBandas.Rows[linha].Cells["integrantes"].Value.ToString();
+            txtAlteraRanking.Text = dgBandas.Rows[linha].Cells["ranking"].Value.ToString();
+            cbAlteraGenero.Text = dgBandas.Rows[linha].Cells["genero"].Value.ToString();
+
+            tabControl1.SelectedTab = tabAlterar; 
         }
 
          private void btnConfirmaAlteracao_Click(object sender, EventArgs e)
         {
-            
+            Banda b = new Banda();
+            b.Nome = txtAlteraNome.Text;
+            b.Ranking = Convert.ToInt32(txtAlteraRanking.Text);
+            b.Integrantes = Convert.ToInt32(txtAlteraIntegrantes.Text);
+            b.Genero = Convert.ToInt32(cbAlteraGenero.SelectedValue.ToString());
 
-
+            ConectaBanco conecta = new ConectaBanco();
+            bool retorno = conecta.alteraBanda(b, idalterar);
+            if (retorno)
+            {
+                MessageBox.Show("Dados alterados com sucesso!");
+            }
+            else
+            {
+                lblmsgerro.Text = conecta.mensagem;
+            }
+            listaBanda();
         }
 
         private void bntAddGenero_Click(object sender, EventArgs e)

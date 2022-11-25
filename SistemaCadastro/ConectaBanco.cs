@@ -36,7 +36,30 @@ namespace SistemaCadastro
                 conexao.Close(); // fecha a conexão
             }
 
-        }// fim lista_generos 
+        }// fim lista_generos
+
+        public bool insereGenero(String genero)
+        {
+            MySqlCommand cmd = new MySqlCommand("insere_genero", conexao);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("genero", genero);
+            try
+            {
+                conexao.Open();
+                cmd.ExecuteNonQuery(); // executa o comando
+                return true;
+            }
+            catch (MySqlException e)
+            {
+                mensagem = "Erro:" + e.Message;
+                return false;
+            }
+            finally
+            {
+                conexao.Close();
+            }
+        }// fim insereGenero
+
 
         public bool insereBanda(Banda b)
         {
@@ -63,6 +86,30 @@ namespace SistemaCadastro
             }
         }// fim insereBanda
 
+        public bool deletaBanda(int idbanda)
+        {
+            MySqlCommand cmd = new MySqlCommand("deleta_banda", conexao);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("idbanda", idbanda);
+            try
+            {
+                conexao.Open();
+                cmd.ExecuteNonQuery(); // executa o comando
+                return true;
+            }
+            catch (MySqlException e)
+            {
+                mensagem = "Erro:" + e.Message;
+                return false;
+            }
+            finally
+            {
+                conexao.Close();
+            }
+        }// fim deletaBanda
+
+
+
         public DataTable listaBandas()
         {
             MySqlCommand cmd = new MySqlCommand("lista_bandas", conexao);
@@ -86,6 +133,33 @@ namespace SistemaCadastro
             }
 
         }// fim lista_bandas
+
+        public bool alteraBanda(Banda b, int idbanda)
+        {
+            MySqlCommand cmd = new MySqlCommand("update_banda", conexao);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("idbanda", idbanda);
+            cmd.Parameters.AddWithValue("nome", b.Nome);
+            cmd.Parameters.AddWithValue("genero", b.Genero);
+            cmd.Parameters.AddWithValue("integrantes", b.Integrantes);
+            cmd.Parameters.AddWithValue("ranking", b.Ranking);
+            try
+            {
+                conexao.Open();
+                cmd.ExecuteNonQuery(); // executa o comando
+                return true;
+            }
+            catch (MySqlException e)
+            {
+                mensagem = "Erro:" + e.Message;
+                return false;
+            }
+            finally
+            {
+                conexao.Close();
+            }
+        }// fim update_banda
+
 
 
     }

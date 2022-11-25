@@ -13,10 +13,12 @@
 
 
 -- Copiando estrutura do banco de dados para banco_cadastro
+DROP DATABASE IF EXISTS `banco_cadastro`;
 CREATE DATABASE IF NOT EXISTS `banco_cadastro` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `banco_cadastro`;
 
 -- Copiando estrutura para tabela banco_cadastro.bandas
+DROP TABLE IF EXISTS `bandas`;
 CREATE TABLE IF NOT EXISTS `bandas` (
   `idbandas` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
@@ -26,18 +28,28 @@ CREATE TABLE IF NOT EXISTS `bandas` (
   PRIMARY KEY (`idbandas`),
   KEY `genero_idx` (`genero`),
   CONSTRAINT `genero` FOREIGN KEY (`genero`) REFERENCES `generos` (`idgenero`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
--- Copiando dados para a tabela banco_cadastro.bandas: ~4 rows (aproximadamente)
+-- Copiando dados para a tabela banco_cadastro.bandas: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `bandas` DISABLE KEYS */;
 INSERT INTO `bandas` (`idbandas`, `nome`, `integrantes`, `ranking`, `genero`) VALUES
-	(8, 'Metallica', 4, 1, 2),
-	(9, 'Megadeth', 4, 2, 2),
-	(10, 'Exaltasamba', 1, 3, 3),
-	(11, 'Judas Priest', 4, 4, 2);
+	(8, 'Metallica', 4, 2, 2),
+	(9, 'Megadeth', 4, 1, 2),
+	(11, 'Judas Priest', 5, 3, 2);
 /*!40000 ALTER TABLE `bandas` ENABLE KEYS */;
 
+-- Copiando estrutura para procedure banco_cadastro.deleta_banda
+DROP PROCEDURE IF EXISTS `deleta_banda`;
+DELIMITER //
+CREATE PROCEDURE `deleta_banda`(IN idbanda INT)
+BEGIN
+	DELETE FROM `banco_cadastro`.`bandas`
+	WHERE `idbandas` = idbanda;
+END//
+DELIMITER ;
+
 -- Copiando estrutura para tabela banco_cadastro.generos
+DROP TABLE IF EXISTS `generos`;
 CREATE TABLE IF NOT EXISTS `generos` (
   `idgenero` int(11) NOT NULL AUTO_INCREMENT,
   `genero` varchar(45) DEFAULT NULL,
@@ -54,6 +66,7 @@ INSERT INTO `generos` (`idgenero`, `genero`) VALUES
 /*!40000 ALTER TABLE `generos` ENABLE KEYS */;
 
 -- Copiando estrutura para procedure banco_cadastro.insere_banda
+DROP PROCEDURE IF EXISTS `insere_banda`;
 DELIMITER //
 CREATE PROCEDURE `insere_banda`(nome VARCHAR(45), integrantes INT(11), ranking INT(11), genero INT(11))
 BEGIN
@@ -76,6 +89,7 @@ END//
 DELIMITER ;
 
 -- Copiando estrutura para procedure banco_cadastro.insere_genero
+DROP PROCEDURE IF EXISTS `insere_genero`;
 DELIMITER //
 CREATE PROCEDURE `insere_genero`(genero VARCHAR(50))
 BEGIN
@@ -87,6 +101,7 @@ END//
 DELIMITER ;
 
 -- Copiando estrutura para procedure banco_cadastro.lista_bandas
+DROP PROCEDURE IF EXISTS `lista_bandas`;
 DELIMITER //
 CREATE PROCEDURE `lista_bandas`()
 BEGIN
@@ -101,6 +116,7 @@ END//
 DELIMITER ;
 
 -- Copiando estrutura para procedure banco_cadastro.lista_generos
+DROP PROCEDURE IF EXISTS `lista_generos`;
 DELIMITER //
 CREATE PROCEDURE `lista_generos`()
 BEGIN
@@ -108,12 +124,19 @@ BEGIN
 END//
 DELIMITER ;
 
--- Copiando estrutura para procedure banco_cadastro.remove_banda
+-- Copiando estrutura para procedure banco_cadastro.update_banda
+DROP PROCEDURE IF EXISTS `update_banda`;
 DELIMITER //
-CREATE PROCEDURE `remove_banda`(IN idbanda INT)
+CREATE PROCEDURE `update_banda`(IN nome VARCHAR(45), IN integrantes INT(11), IN ranking INT(11), IN genero INT(11), IN idbanda INT)
 BEGIN
-	DELETE FROM `banco_cadastro`.`generos`
+	UPDATE `banco_cadastro`.`bandas`
+	SET
+	`nome` = nome,
+	`integrantes` = integrantes,
+	`ranking` = ranking,
+	`genero` = genero
 	WHERE `idbandas` = idbanda;
+
 END//
 DELIMITER ;
 
